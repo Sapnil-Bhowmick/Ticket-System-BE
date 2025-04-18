@@ -5,8 +5,9 @@ const {
     edit_profile
 } = require("../Controllers/profile.controller.js")
 
+const {userAuth} = require("../Middlewares/auth.middleware.js")
 
-profileRouter.patch("/profile/edit" , edit_profile)
+profileRouter.patch("/edit" , userAuth , edit_profile)
 
 
 module.exports = {

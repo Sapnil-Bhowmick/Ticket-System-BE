@@ -1,5 +1,6 @@
 const express = require("express")
 const authRouter = express.Router()
+const trimRequest = require("trim-request")
 
 const {
     register_Admin ,
@@ -8,8 +9,8 @@ const {
 
 
 
-authRouter.post("/register" , register_Admin)
-authRouter.post("/login" , admin_member_login)
+authRouter.post("/register" , trimRequest.all , register_Admin)
+authRouter.post("/login" , trimRequest.all , admin_member_login)
 
 
 module.exports = {

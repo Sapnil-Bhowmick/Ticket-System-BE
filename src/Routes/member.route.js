@@ -2,14 +2,18 @@ const express = require("express")
 const memberRouter = express.Router()
 
 const {
+    getAllMembers,
     addMember,
     editMember,
     deleteMember
 } = require("../Controllers/member.controller.js")
 
-memberRouter.post("/add" , addMember)
-memberRouter.post("/edit" , editMember)
-memberRouter.delete("/delete" , deleteMember)
+const {userAuth} = require("../Middlewares/auth.middleware.js")
+
+memberRouter.get("/all" , userAuth , getAllMembers)
+memberRouter.post("/add" , userAuth , addMember)
+memberRouter.post("/edit" , userAuth , editMember)
+memberRouter.delete("/delete" , userAuth , deleteMember)
 
 module.exports = {
     memberRouter
