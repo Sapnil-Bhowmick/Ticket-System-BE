@@ -6,7 +6,7 @@ const { getAllMessages,
 const messageRouter = express.Router()
 
 messageRouter.get("/all", getAllMessages)
-messageRouter.post("/send/:senderId", sendMessage)
+messageRouter.post("/send/:senderID", sendMessage)
 
 module.exports = {
     messageRouter

@@ -9,14 +9,18 @@ const { ticketRouter } = require("./ticket.route.js")
 const { messageRouter } = require("./message.route.js")
 const {CustomizationRouter} = require("./Customization.route.js")
 const { analyticsRouter } = require("./analytics.route.js")
+const { userRouter } = require("./user.route.js")
+
+const trimRequest = require("trim-request")
 
 
-router.use("/auth" , authRouter)
-router.use("/profile" , profileRouter)
-router.use("/member" , memberRouter)
-router.use("/ticket" , ticketRouter)
-router.use("/message" , messageRouter)
-router.use("/chatbot" , CustomizationRouter)
-router.use("/analytics" , analyticsRouter)
+router.use("/auth" , trimRequest.all , authRouter)
+router.use("/profile" , trimRequest.all , profileRouter)
+router.use("/member" , trimRequest.all , memberRouter)
+router.use("/user" , trimRequest.all , userRouter)
+router.use("/ticket" , trimRequest.all , ticketRouter)
+router.use("/message" , trimRequest.all , messageRouter)
+router.use("/chatbot" , trimRequest.all , CustomizationRouter)
+router.use("/analytics" , trimRequest.all , analyticsRouter)
 
 module.exports = router

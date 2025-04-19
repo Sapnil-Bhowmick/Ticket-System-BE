@@ -30,20 +30,10 @@ const setTicketStatus = (req,res,next) => {
 }
 
 
-// Register user who is raising ticket
-const register_TicketRaiser = (req,res,next) => {
-    try{
-        
-    }
-    catch(err){
-        next(err)
-    }
-}
 
 
 module.exports = {
     getAllTickets,
     getAllTickets_byStatus,
-    setTicketStatus,
-    register_TicketRaiser
+    setTicketStatus
 }
