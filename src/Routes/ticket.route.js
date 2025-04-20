@@ -14,8 +14,8 @@ const {userAuth} = require("../Middlewares/auth.middleware.js")
 ticketRouter.get("/all" , userAuth , getAllTickets)
 ticketRouter.get("/all/:status" , userAuth , getAllTickets_byStatus)
 
-// Pass query params -> resolved / unresolved
-ticketRouter.post("/" , userAuth , setTicketStatus)
+// Pass query params
+ticketRouter.post("/:status" , userAuth , setTicketStatus)
 ticketRouter.post("/assign/:memberID" , userAuth , assignTicket)
 
 

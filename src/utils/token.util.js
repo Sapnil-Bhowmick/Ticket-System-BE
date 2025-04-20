@@ -17,7 +17,7 @@ const verifyJWT = (token , tokenSecret) => {
     return new Promise((resolve , reject) => {
         jwt.verify(token , tokenSecret , (err , decodedPayload) => {
             if(err){
-                reject(null)
+                resolve(null)
             } else {
                 resolve(decodedPayload)
             }
