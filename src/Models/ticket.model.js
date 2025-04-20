@@ -34,15 +34,9 @@ const ticketSchema = new mongoose.Schema({
 
   assignID: {
     type: ObjectId,
-    refPath: 'assignType',  // ← dynamic reference of either Admin or Member schema
+    refPath: 'assignType',  // ← dynamic reference of either Admin or TeamMember schema
     required: true,
   },
-
-  // schemaType: {
-  //   type: String,
-  //   required: true,
-  //   enum: ['Admin', 'TeamMember'] 
-  // },
 
   assignType: {
     type: String,
