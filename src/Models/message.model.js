@@ -9,8 +9,13 @@ const messageSchema = new mongoose.Schema({
 
   senderID: {
     type: ObjectId,
-    ref: "User",
+    refPath: 'schemaType',  // ← dynamic reference of either Admin or TeamMember schema or User
     required: true,
+  },
+
+  schemaType: {
+    type: String,
+    enum: ["Admin" , "TeamMember" , "User"]
   },
 
   ticketID: {
