@@ -34,14 +34,20 @@ const ticketSchema = new mongoose.Schema({
 
   assignID: {
     type: ObjectId,
-    ref: "Admin",
+    refPath: 'assignType',  // ← dynamic reference of either Admin or Member schema
     required: true,
   },
 
+  // schemaType: {
+  //   type: String,
+  //   required: true,
+  //   enum: ['Admin', 'TeamMember'] 
+  // },
+
   assignType: {
     type: String,
-    enum: ["ADMIN" , "MEMBER"],
-    default: "ADMIN"
+    enum: ["Admin" , "TeamMember"],
+    default: "Admin"
   },
 
   latestMessage: {

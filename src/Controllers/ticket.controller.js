@@ -13,7 +13,19 @@ const getAllTickets = async(req, res, next) => {
         // * Get all tickets assigned to specific user(admin / member) irrespective of status
         const allAssignedTickets = await ticketModel.find({
             assignID: userID
-        })
+        }).populate([
+            {
+                path: 'assignID',
+                select: '-password'
+            },
+            {
+                path: 'creatorID',
+                select: '-password'
+            },
+            {
+                path: 'latestMessage'
+            },
+        ])
 
         res.json({
             message: "Fetched all tickets",
@@ -68,7 +80,7 @@ const setTicketStatus = async (req, res, next) => {
         const { status } = req.params
         const { ticketID } = req.body
 
-        const userType = isMember? "MEMBER" : "ADMIN"
+        const userType = isMember? "TeamMember" : "Admin"
         let ticket = await ticketModel.findOne({
             _id: ticketID,
             assignID: userID,
@@ -107,7 +119,7 @@ const assignTicket = async (req, res, next) => {
 
         let updatedTicket = await ticketModel.findByIdAndUpdate(ticketID, {
             assignID: memberID,
-            assignType: "MEMBER"
+            assignType: "TeamMember"
         }, { new: true })
 
         res.json({

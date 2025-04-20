@@ -36,8 +36,8 @@ const sendMessage_USER = async (req, res, next) => {
             ticket = await ticketModel.create({
                 description: message,
                 creatorID: senderID,
-                assignID: defaultAdmin[0]._id
-
+                assignID: defaultAdmin[0]._id,
+                schemaType: "Admin"
             })
 
             // * Schedule miss check
