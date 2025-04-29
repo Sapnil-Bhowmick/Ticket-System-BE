@@ -8,6 +8,7 @@ const {
 const { validateStatus, validateGetTicketsByStatusData } = require("../Services/ticket.service.js")
 
 const getAllTickets = async(req, res, next) => {
+    console.log("in -> getAllTickets")
     try {
         const {userID} = req.LoggedIn_UserInfo
         // * Get all tickets assigned to specific user(admin / member) irrespective of status
@@ -25,7 +26,7 @@ const getAllTickets = async(req, res, next) => {
             {
                 path: 'latestMessage'
             },
-        ])
+        ]).sort({ createdAt: -1 })
 
         res.json({
             message: "Fetched all tickets",
@@ -80,15 +81,17 @@ const setTicketStatus = async (req, res, next) => {
         const { status } = req.params
         const { ticketID } = req.body
 
+        console.log(userID , isMember , status , ticketID)
+
         const userType = isMember? "TeamMember" : "Admin"
         let ticket = await ticketModel.findOne({
             _id: ticketID,
             assignID: userID,
             assignType: userType,
-            status: "UnResolved"
+            status: status === "Resolved" ? "UnResolved" : "Resolved"
         })
 
-        if (!ticket) throw createHTTPError.NotFound(`No unresolved ticket found assigned to this ${userType} with the provided ticket ID.`)
+        if (!ticket) throw createHTTPError.NotFound(`No ${status === "Resolved" ? "UnResolved" : "Resolved"} ticket found assigned to this ${userType} with the provided ticket ID.`)
         ticket.status = status
         ticket = await ticket.save()
         res.json({

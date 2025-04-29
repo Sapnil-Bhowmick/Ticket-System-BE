@@ -28,7 +28,7 @@ const validateMemberCredentials = (req) => {
 
 
 const validateMemberProfileData = (req) => {
-    const { userName, emailID, role } = req.body
+    const { userName, emailID, role, phone } = req.body
     const validRoles = ["ADMIN" , "MEMBER"]
 
     if (userName && (!typeof(userName) === "string" || !validator.isLength(userName, { min: 2, max: 100 }))) {
@@ -44,7 +44,7 @@ const validateMemberProfileData = (req) => {
         throw createHTTPError.BadRequest("Please assign a valid role to team member")
     }
 
-    const ALLOWED_EDIT_FIELDS = ["userName" , "emailID" , "role"]
+    const ALLOWED_EDIT_FIELDS = ["userName" , "emailID" , "role" , "phone"]
     const isEditAllowed = Object.keys(req.body).every((key) => ALLOWED_EDIT_FIELDS.includes(key))
     if(!isEditAllowed){
         throw createHTTPError.BadRequest("Invalid fields to edit")

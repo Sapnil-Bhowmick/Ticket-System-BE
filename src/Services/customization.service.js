@@ -1,6 +1,6 @@
 
 const validator = require("validator"); // for email & length validation
-const createHTTPError = require("http-errors"); // assuming you're using this for error handling
+const createHTTPError = require("http-errors"); 
 
 const validateCustomizationInput = (req) => {
   const { color, welcomeMessage, formPlaceholders, missedChatDuration } = req.body;

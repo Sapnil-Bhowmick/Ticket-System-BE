@@ -16,7 +16,7 @@ const adminSchema = new mongoose.Schema({
         type: String,
         minLength: [2, "Firstname should be within 2 and 100 characters"],
         maxLength: [100, "Firstname should be within 2 and 100 characters"],
-        required: [true, "FirstName is required"]
+        required: [true, "LastName is required"]
     },
 
     emailID: {

@@ -19,6 +19,7 @@ const register_Admin = async (req, res, next) => {
         validate_AdminRegistrationCredentials(req)
 
         const { firstName, lastName, emailID, password } = req.body
+        console.log(req.body)
         const isEmailExists = await adminModel.findOne({ emailID })
         if (isEmailExists) {
             throw createHTTPError.Conflict("EmailID already exists")

@@ -118,6 +118,8 @@ const deleteMember = async (req, res, next) => {
         const { memberID } = req.query
         const { userID, isMember } = req.LoggedIn_UserInfo
 
+        console.log("memberID" , memberID)
+
         if (isMember) throw createHTTPError.Forbidden("Only admins are authorized to delete team members.")
 
         const existingMember = await memberModel.findById(memberID)

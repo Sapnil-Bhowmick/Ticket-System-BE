@@ -16,7 +16,7 @@ const edit_profile = async (req, res, next) => {
             const existingMember = await memberModel.findOne({ emailID: emailID.toLowerCase() })
             const existingAdmin = await adminModel.findOne({ emailID: emailID.toLowerCase() })
             if (existingMember || existingAdmin) {
-                throw createHTTPError.Conflict("EmailID is alrady taken")
+                throw createHTTPError.Conflict("EmailID is already taken")
             }
 
         }

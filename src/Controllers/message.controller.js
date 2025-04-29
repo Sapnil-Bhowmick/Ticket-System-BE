@@ -8,7 +8,7 @@ const { getTimeInMinutes } = require("../Services/message.service.js")
 const getAllMessages_ByTicket = async (req, res, next) => {
     try {
         const { ticketID } = req.params
-        console.log("ticketID", ticketID)
+        // console.log("ticketID", ticketID)
         const { userID } = req.LoggedIn_UserInfo
 
         if (!ticketID) throw createHTTPError.BadRequest("TicketID is required")
@@ -141,7 +141,7 @@ const sendMessage_ADMIN_MEMBER = async (req, res, next) => {
             }
 
             // * Create New Message
-            const newMessage = await messageModel.create({
+            let newMessage = await messageModel.create({
                 message,
                 senderID,
                 ticketID: existingTicket._id,
@@ -151,15 +151,20 @@ const sendMessage_ADMIN_MEMBER = async (req, res, next) => {
             // existingTicket.latestMessage = newMessage._id
 
             const isFirstReply = existingTicket.firstReplyAt ? false : true
-            console.log("isFirstReply", isFirstReply)
+            // console.log("isFirstReply", isFirstReply)
             if (isFirstReply) {
                 existingTicket.firstReplyAt = Date.now()
             }
+
             await existingTicket.save()
+
+            const populatedMessage = await newMessage.populate('senderID')
+
+            // console.log("populatedMessage" , populatedMessage)
 
             res.json({
                 message: "Message send successfully",
-                data: newMessage
+                data: populatedMessage
             })
         }
     }

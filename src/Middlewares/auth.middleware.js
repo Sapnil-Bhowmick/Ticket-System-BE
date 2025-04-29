@@ -14,7 +14,7 @@ const userAuth = async (req, res, next) => {
 
         const token = bearerToken.split(" ")[1]
         const decodedPayload = await verify_JWT_Token(token, process.env.JWT_TOKEN_SECRET)
-        console.log("decodedPayload" , decodedPayload)
+        // console.log("token" , token)
         
         if (!decodedPayload) {
             throw createHTTPError.Unauthorized("Invalid Token")

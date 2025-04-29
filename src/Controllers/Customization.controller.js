@@ -34,13 +34,13 @@ const getCustomizations = async(req,res,next) => {
         if(existingCustmizationDocs.length === 0){
             let newCustomizationDoc = new customizationModel()
             newCustomizationDoc = await newCustomizationDoc.save()
-            res.json({
+             return res.json({
                 message: "Fetched Customizations Data Successfully",
                 data: newCustomizationDoc
             })
         } 
 
-        res.json({
+        return res.json({
             message: "Fetched Customizations Data Successfully",
             data: existingCustmizationDocs[0]
         })
