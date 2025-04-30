@@ -43,8 +43,8 @@ const validateCustomizationInput = (req) => {
 
   // Validate missedChatDuration fields
   if (missedChatDuration) {
-    if (missedChatDuration.hours && (missedChatDuration.hours < 0 || missedChatDuration.hours > 24)) {
-      throw createHTTPError.BadRequest("Missed chat hours must be between 0 and 24");
+    if (missedChatDuration.hours && (missedChatDuration.hours < 0 || missedChatDuration.hours > 12)) {
+      throw createHTTPError.BadRequest("Missed chat hours must be between 0 and 12");
     }
     if (missedChatDuration.minutes && (missedChatDuration.minutes < 0 || missedChatDuration.minutes > 60)) {
       throw createHTTPError.BadRequest("Missed chat minutes must be between 0 and 60");

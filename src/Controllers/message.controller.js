@@ -45,6 +45,42 @@ const getAllMessages_ByTicket = async (req, res, next) => {
 }
 
 
+const getAllMessages_ByUser = async (req, res, next) => {
+    try {
+        const { senderID } = req.params;
+
+        console.log("IN getAllMessages_ByUser")
+
+        // * Find all tickets created by the user
+        const tickets = await ticketModel.find({ creatorID: senderID }).select("_id");
+
+        if (tickets.length === 0) {
+            return res.json({
+                message: "No messages found for this user.",
+                data: [],
+            });
+        }
+
+        // * Step 2: Extract all ticket IDs
+        const ticketIDs = tickets.map((ticket) => ticket._id);
+
+        // * Find all messages linked to those tickets
+        const messages = await messageModel
+            .find({ ticketID: { $in: ticketIDs } })
+            .populate("ticketID")
+            .populate("senderID")
+            .sort({ createdAt: 1 })
+
+        return res.json({
+            message: "Messages fetched successfully",
+            data: messages,
+        });
+
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 const sendMessage_USER = async (req, res, next) => {
     try {
@@ -59,9 +95,9 @@ const sendMessage_USER = async (req, res, next) => {
         let MISS_TIMEOUT_MINUTES = 60
         if (customizationDoc.length !== 0) {
             MISS_TIMEOUT_MINUTES = getTimeInMinutes(customizationDoc[0].missedChatDuration)
-        } 
+        }
 
-        console.log("MISS_TIMEOUT_MINUTES" , MISS_TIMEOUT_MINUTES)
+        console.log("MISS_TIMEOUT_MINUTES", MISS_TIMEOUT_MINUTES)
 
         const defaultAdmin = await adminModel.find({})
 
@@ -92,12 +128,17 @@ const sendMessage_USER = async (req, res, next) => {
         }
 
         // * Create New Message
-        const newMessage = await messageModel.create({
+        let newMessage = await messageModel.create({
             message,
             senderID,
             ticketID: ticket._id,
             schemaType: "User"
         })
+
+        newMessage = await newMessage.populate([
+            { path: "senderID", select: "-password" }, 
+            { path: "ticketID" }
+        ])
 
         // * Update latest message
         ticket.latestMessage = newMessage._id
@@ -119,7 +160,7 @@ const sendMessage_USER = async (req, res, next) => {
 
 const sendMessage_ADMIN_MEMBER = async (req, res, next) => {
     try {
-        const { userID: senderID , isMember} = req.LoggedIn_UserInfo
+        const { userID: senderID, isMember } = req.LoggedIn_UserInfo
         const { message, ticketID } = req.body
 
         if (!senderID) throw createHTTPError.BadRequest("SenderID is required")
@@ -177,5 +218,6 @@ const sendMessage_ADMIN_MEMBER = async (req, res, next) => {
 module.exports = {
     getAllMessages_ByTicket,
     sendMessage_USER,
-    sendMessage_ADMIN_MEMBER
+    sendMessage_ADMIN_MEMBER,
+    getAllMessages_ByUser
 }

@@ -8,7 +8,7 @@ const { userAuth } = require("../Middlewares/auth.middleware.js")
 const CustomizationRouter = express.Router()
 
 CustomizationRouter.patch("/customizations/:customizationID" , userAuth , customize)
-CustomizationRouter.get("/customizations" , userAuth , getCustomizations)
+CustomizationRouter.get("/customizations" , getCustomizations)
 
 
 module.exports = {

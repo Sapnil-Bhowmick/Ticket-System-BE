@@ -6,6 +6,7 @@ const { adminModel, memberModel } = require("../Models/index.js")
 
 
 const userAuth = async (req, res, next) => {
+    console.log("In auth middleware")
     try {
         const bearerToken = req.headers["authorization"]
         if (!bearerToken) {

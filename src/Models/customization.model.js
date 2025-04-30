@@ -60,7 +60,7 @@ const customizationSchema = new mongoose.Schema({
 
     // * Default is 1 hr
     missedChatDuration: {
-        hours: { type: Number, default: 0 , min: 0 , max: 24},
+        hours: { type: Number, default: 0 , min: 0 , max: 12},
         minutes: { type: Number, default: 0 , min: 0 , max: 60},
         seconds: { type: Number, default: 0 , min: 0 , max: 60}
     }
