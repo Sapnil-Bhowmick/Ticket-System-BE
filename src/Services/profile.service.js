@@ -4,9 +4,9 @@ const validator = require("validator")
 const validateAdminProfileEditData = (req) => {
     const { firstName, lastName, emailID, password, confirmPassword } = req.body
 
-    if (!password || !confirmPassword) {
-        throw createHTTPError.BadRequest("Requires both password and confirm password fields.")
-    }
+    // if (!password || !confirmPassword) {
+    //     throw createHTTPError.BadRequest("Requires both password and confirm password fields.")
+    // }
 
     if (firstName && (!typeof (firstName) === "string" || !validator.isLength(firstName, { min: 2, max: 100 }))) {
         throw createHTTPError.BadRequest("Please ensure that the firstName is between 2 and 100 characters")
@@ -20,9 +20,16 @@ const validateAdminProfileEditData = (req) => {
         throw createHTTPError.BadRequest("Please ensure that the emailID is valid")
     }
 
-    if (password &&
-        (!validator.isLength(password, { min: 6 })) || !validator.isLength(confirmPassword, { min: 6 })) {
-        throw createHTTPError.BadRequest("Please ensure that the Password and confirm password is atleast of 6 characters")
+    if (password && (!validator.isLength(password, { min: 6 }))) {
+        throw createHTTPError.BadRequest("Please ensure that the Password is atleast of 6 characters")
+    }
+
+    if (confirmPassword && !validator.isLength(confirmPassword, { min: 6 })) {
+        throw createHTTPError.BadRequest("Please ensure that the ConfirmPassword is atleast of 6 characters")
+    }
+
+    if(password !== confirmPassword){
+        throw createHTTPError.BadRequest("Password and ConfirmPassword fields should match")
     }
 }
 

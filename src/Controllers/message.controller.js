@@ -94,6 +94,7 @@ const sendMessage_USER = async (req, res, next) => {
         // * DEfault time is 1hr
         let MISS_TIMEOUT_MINUTES = 60
         if (customizationDoc.length !== 0) {
+            // console.log("customizationDoc already exists")
             MISS_TIMEOUT_MINUTES = getTimeInMinutes(customizationDoc[0].missedChatDuration)
         }
 

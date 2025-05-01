@@ -119,6 +119,7 @@ const assignTicket = async (req, res, next) => {
 
         const existingTicket = await ticketModel.findById(ticketID)
         if (!existingTicket) throw createHTTPError.BadRequest("Ticket Not Found")
+        if(existingTicket.firstReplyAt) throw createHTTPError.Forbidden("Can't assign to member, chat has already started")
 
         let updatedTicket = await ticketModel.findByIdAndUpdate(ticketID, {
             assignID: memberID,

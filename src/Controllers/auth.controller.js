@@ -75,7 +75,7 @@ const admin_member_login = async (req, res, next) => {
         }
 
         if (!existing_Admin_Member) {
-            throw createError.NotFound("Invalid Credentials");
+            throw createHTTPError.NotFound("Invalid Credentials");
         }
 
         const isPasswordValid = await bcrypt.compare(password, existing_Admin_Member.password)

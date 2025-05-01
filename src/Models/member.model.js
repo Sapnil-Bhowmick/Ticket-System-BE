@@ -3,6 +3,8 @@ const { ObjectId } = mongoose.Schema.Types
 const validator = require("validator")
 const createHTTPError = require("http-errors")
 
+const bcrypt = require("bcrypt")
+
 const memberSchema = new mongoose.Schema({
     userName: {
         type: String,
@@ -54,6 +56,13 @@ const memberSchema = new mongoose.Schema({
     }
 })
 
+
+memberSchema.methods.hashPassword = async function(password){
+    const saltRounds = 15
+    const hashedPassword = await bcrypt.hash(password, saltRounds)
+    console.log("hashedPAssword" , hashedPassword)
+    return hashedPassword
+}
 
 
 const memberModel = mongoose.model("TeamMember", memberSchema)
