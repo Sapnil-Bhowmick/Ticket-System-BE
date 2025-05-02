@@ -7,10 +7,10 @@ const {
 } = require("../Models/index.js")
 const { validateStatus, validateGetTicketsByStatusData } = require("../Services/ticket.service.js")
 
-const getAllTickets = async(req, res, next) => {
+const getAllTickets = async (req, res, next) => {
     console.log("in -> getAllTickets")
     try {
-        const {userID} = req.LoggedIn_UserInfo
+        const { userID } = req.LoggedIn_UserInfo
         // * Get all tickets assigned to specific user(admin / member) irrespective of status
         const allAssignedTickets = await ticketModel.find({
             assignID: userID
@@ -39,14 +39,14 @@ const getAllTickets = async(req, res, next) => {
 }
 
 
-const getAllTickets_byStatus = async(req, res, next) => {
+const getAllTickets_byStatus = async (req, res, next) => {
     try {
         validateGetTicketsByStatusData(req)
-        const {userID} = req.LoggedIn_UserInfo
-        const {status} = req.params
+        const { userID } = req.LoggedIn_UserInfo
+        const { status } = req.params
         // * Get all tickets assigned to specific user(admin / member) irrespective of status
         const allAssignedTickets = await ticketModel.find({
-            assignID: userID ,
+            assignID: userID,
             status
         }).populate([
             {
@@ -81,9 +81,9 @@ const setTicketStatus = async (req, res, next) => {
         const { status } = req.params
         const { ticketID } = req.body
 
-        console.log(userID , isMember , status , ticketID)
+        console.log(userID, isMember, status, ticketID)
 
-        const userType = isMember? "TeamMember" : "Admin"
+        const userType = isMember ? "TeamMember" : "Admin"
         let ticket = await ticketModel.findOne({
             _id: ticketID,
             assignID: userID,
@@ -119,7 +119,9 @@ const assignTicket = async (req, res, next) => {
 
         const existingTicket = await ticketModel.findById(ticketID)
         if (!existingTicket) throw createHTTPError.BadRequest("Ticket Not Found")
-        if(existingTicket.firstReplyAt) throw createHTTPError.Forbidden("Can't assign to member, chat has already started")
+
+        if (existingTicket.status === "Resolved") throw createHTTPError.Forbidden("Chat is resolved. Cannot assign")
+        if (existingTicket.firstReplyAt) throw createHTTPError.Forbidden("Conversation is already in progress. Cannot assign")
 
         let updatedTicket = await ticketModel.findByIdAndUpdate(ticketID, {
             assignID: memberID,
