@@ -8,7 +8,7 @@ const {
 const { validateStatus, validateGetTicketsByStatusData } = require("../Services/ticket.service.js")
 
 const getAllTickets = async (req, res, next) => {
-    console.log("in -> getAllTickets")
+    // console.log("in -> getAllTickets")
     try {
         const { userID } = req.LoggedIn_UserInfo
         // * Get all tickets assigned to specific user(admin / member) irrespective of status
@@ -81,7 +81,7 @@ const setTicketStatus = async (req, res, next) => {
         const { status } = req.params
         const { ticketID } = req.body
 
-        console.log(userID, isMember, status, ticketID)
+        // console.log(userID, isMember, status, ticketID)
 
         const userType = isMember ? "TeamMember" : "Admin"
         let ticket = await ticketModel.findOne({

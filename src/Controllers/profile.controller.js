@@ -62,7 +62,7 @@ const edit_admin_member = async (req, res, next) => {
     try {
         validateAdminProfileEditData(req)
 
-        console.log("In edit_admin_member" , req.body)
+        // console.log("In edit_admin_member" , req.body)
 
         const { userID, isMember } = req.LoggedIn_UserInfo
         const { firstName, lastName, emailID, password } = req.body
@@ -73,7 +73,7 @@ const edit_admin_member = async (req, res, next) => {
             const existingMember = await memberModel.findOne({ emailID: emailID.toLowerCase() })
             const existingAdmin = await adminModel.findOne({ emailID: emailID.toLowerCase() })
             if (existingMember || existingAdmin) {
-                console.log("Email exists already")
+                // console.log("Email exists already")
                 throw createHTTPError.Conflict("EmailID is already taken")
             }
 
@@ -109,7 +109,7 @@ const edit_admin_member = async (req, res, next) => {
 
             existingMember = await existingMember.save()
 
-            console.log("Updated Member Info")
+            // console.log("Updated Member Info")
 
             return res.json({
                 message: "Profile Update Successfully",
@@ -141,7 +141,7 @@ const edit_admin_member = async (req, res, next) => {
             })
 
             const updatedMembers = await Promise.all(updatePromises)
-            console.log("updated Admin info", updatedMembers)
+            // console.log("updated Admin info", updatedMembers)
 
             return res.json({
                 message: "Profile Update Successfully",

@@ -49,7 +49,7 @@ const getAllMessages_ByUser = async (req, res, next) => {
     try {
         const { senderID } = req.params;
 
-        console.log("IN getAllMessages_ByUser")
+        // console.log("IN getAllMessages_ByUser")
 
         // * Find all tickets created by the user
         const tickets = await ticketModel.find({ creatorID: senderID }).select("_id");
@@ -98,7 +98,7 @@ const sendMessage_USER = async (req, res, next) => {
             MISS_TIMEOUT_MINUTES = getTimeInMinutes(customizationDoc[0].missedChatDuration)
         }
 
-        console.log("MISS_TIMEOUT_MINUTES", MISS_TIMEOUT_MINUTES)
+        // console.log("MISS_TIMEOUT_MINUTES", MISS_TIMEOUT_MINUTES)
 
         const defaultAdmin = await adminModel.find({})
 

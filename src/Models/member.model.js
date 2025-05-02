@@ -60,7 +60,7 @@ const memberSchema = new mongoose.Schema({
 memberSchema.methods.hashPassword = async function(password){
     const saltRounds = 15
     const hashedPassword = await bcrypt.hash(password, saltRounds)
-    console.log("hashedPAssword" , hashedPassword)
+    // console.log("hashedPAssword" , hashedPassword)
     return hashedPassword
 }
 

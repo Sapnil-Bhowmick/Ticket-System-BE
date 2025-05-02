@@ -25,7 +25,7 @@ const getMetrics = async(req,res,next) => {
 
             const avgReplyTimeinMs = repliedticketsCount > 0 ? sumReplyTime / repliedticketsCount : 0
             avgReplyTimeInSeconds = Math.round(avgReplyTimeinMs / 1000); // convert ms to seconds
-            console.log("avgReplyTimeInSeconds" , avgReplyTimeInSeconds)
+            // console.log("avgReplyTimeInSeconds" , avgReplyTimeInSeconds)
         }
 
         // *  Missed chats per week
