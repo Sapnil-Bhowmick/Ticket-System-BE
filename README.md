@@ -4,3 +4,6 @@
 
 # Live Demo Link
   - https://sapnil-ticket-system.netlify.app/
+
+# A Note 
+  - Features implememented , Demo Credentials and Live Demo Link  --> Is proved in the Frontend Repo ReadMe (https://github.com/Sapnil-Bhowmick/Ticket-System-FE)
